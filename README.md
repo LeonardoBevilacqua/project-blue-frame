@@ -7,4 +7,5 @@
 * Should use a web framework (like node.js or react) and Docker for easy distribution;
 * Should allow the user to create albuns (folders) to be displayed;
 * Should allow the user to access an admin page to configure each connected display;
-* Should allow remove upload.
+* Should allow remove upload;
+* [OPT] Should have spotify integration.
