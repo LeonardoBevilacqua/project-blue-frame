@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        .fade-in-image {
+            position: absolute;
+            top: 8px;
+            opacity: 0%;
+            transition: opacity 2s
+        }
+
+        .fade-in-image:hover {
+            opacity: 100%;
+            /*  transition: opacity 2s */
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="http://lorempixel.com/800/600/cats">
+    </div>
+    <div class="fade-in-image">
+        <img src="https://source.unsplash.com/fk4tiMlDFF0/800x600/">
+    </div>
+</body>
+
+</html>
