@@ -1,0 +1,24 @@
+.fade-in-image {
+	position: absolute;
+	top: 8px;
+	/* opacity: 0%;
+	transition: opacity 2s; */
+}
+
+
+.fade-in-image.fade-out {
+	animation: fade-out 2s;
+}
+
+/* .fade-in-image:hover {
+	opacity: 100%;
+} */
+
+@keyframes fade-out {
+	from {
+		opacity: 100%;
+	}
+	to {
+		opacity: 0%;
+	}
+}
