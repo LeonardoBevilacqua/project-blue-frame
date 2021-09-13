@@ -1,18 +1,25 @@
 .fade-in-image {
 	position: absolute;
 	top: 8px;
-	/* opacity: 0%;
-	transition: opacity 2s; */
 }
 
-
-.fade-in-image.fade-out {
-	animation: fade-out 2s;
+.fade-in {
+	animation: fade-in;
 }
 
-/* .fade-in-image:hover {
-	opacity: 100%;
-} */
+.fade-out {
+	animation: fade-out;
+}
+
+.fade-in,
+.fade-out {
+	animation-fill-mode: forwards;
+}
+
+img {
+	height: 600px;
+	width: 800px;
+}
 
 @keyframes fade-out {
 	from {
@@ -20,5 +27,14 @@
 	}
 	to {
 		opacity: 0%;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0%;
+	}
+	to {
+		opacity: 100%;
 	}
 }
