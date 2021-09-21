@@ -61,7 +61,7 @@ function App() {
 				<img src={backImage} alt={backImage} />
 			</div>
 			<div
-				className={`fade-in-image ${!frontImageHidden ? 'fade-out' : 'fade-in'}`}
+				className={`overlay-image ${!frontImageHidden ? 'fade-out' : 'fade-in'}`}
 				style={{ animationDuration: `${animationTime}s` }}
 			>
 				<img src={frontImage} alt={frontImage} />
