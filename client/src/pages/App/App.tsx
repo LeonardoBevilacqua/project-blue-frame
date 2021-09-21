@@ -16,11 +16,13 @@ function App() {
 			const appService = new AppService();
 			const { data } = await appService.getImages();
 			setImages(data);
-			setBackImage('http://lorempixel.com/800/600/cats');
-			setFrontImage('https://source.unsplash.com/fk4tiMlDFF0/800x600');
+			setBackImage(data[index]['download_url']);
+			setFrontImage(data[index + 1]['download_url']);
+			setIndex(2);
 		};
 
 		getImages();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(
@@ -40,7 +42,7 @@ function App() {
 						} else {
 							setBackImage(images[index]['download_url']);
 						}
-						setIndex(index !== images.length ? index + 1 : 0);
+						setIndex(index + 1 !== images.length ? index + 1 : 0);
 						clearTimeout(timer);
 					}, 1000 * animationTime);
 				}
@@ -68,6 +70,7 @@ function App() {
 			<pre>frontImageHidden = {frontImageHidden.toString()}</pre>
 			<pre>transitionTime = {transitionTime}</pre>
 			<pre>animationTime = {animationTime}</pre>
+			<pre>index = {index}</pre>
 			<input
 				type="number"
 				name="transitionTime"
