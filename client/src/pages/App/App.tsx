@@ -7,8 +7,8 @@ function App() {
 	const [ images, setImages ] = useState([]);
 	const [ backImage, setBackImage ] = useState('');
 	const [ frontImage, setFrontImage ] = useState('');
-	const [ transitionTime, setTransitionTime ] = useState(5);
-	const [ animationTime, setAnimationTime ] = useState(2);
+	const [ transitionTime ] = useState(5);
+	const [ animationTime ] = useState(2);
 	const [ index, setIndex ] = useState(0);
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ function App() {
 		};
 
 		getImages();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(
@@ -53,21 +53,38 @@ function App() {
 	);
 
 	return (
-		<div>
+		<div className="container">
 			<div
-				className={`${frontImageHidden ? 'fade-out' : 'fade-in'}`}
+				className="background"
+				style={{ backgroundImage: frontImageHidden ? `url(${frontImage})` : `url(${backImage})` }}
+			>
+				<img
+					className={`${frontImageHidden ? 'fade-out' : 'fade-in'}`}
+					style={{ animationDuration: `${animationTime}s` }}
+					src={backImage}
+					alt={backImage}
+				/>
+				<img
+					className={`${!frontImageHidden ? 'fade-out' : 'fade-in'}`}
+					style={{ animationDuration: `${animationTime}s` }}
+					src={frontImage}
+					alt={frontImage}
+				/>
+			</div>
+			<div
+				className={`image-container ${frontImageHidden ? 'fade-out' : 'fade-in'}`}
 				style={{ animationDuration: `${animationTime}s` }}
 			>
 				<img src={backImage} alt={backImage} />
 			</div>
 			<div
-				className={`overlay-image ${!frontImageHidden ? 'fade-out' : 'fade-in'}`}
+				className={`image-container ${!frontImageHidden ? 'fade-out' : 'fade-in'}`}
 				style={{ animationDuration: `${animationTime}s` }}
 			>
 				<img src={frontImage} alt={frontImage} />
 			</div>
 
-			<pre>frontImageHidden = {frontImageHidden.toString()}</pre>
+			{/* <pre>frontImageHidden = {frontImageHidden.toString()}</pre>
 			<pre>transitionTime = {transitionTime}</pre>
 			<pre>animationTime = {animationTime}</pre>
 			<pre>index = {index}</pre>
@@ -84,7 +101,7 @@ function App() {
 				id="animationTime"
 				value={animationTime}
 				onChange={(e) => setAnimationTime(e.target.valueAsNumber)}
-			/>
+			/> */}
 		</div>
 	);
 }
