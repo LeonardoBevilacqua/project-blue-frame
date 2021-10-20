@@ -15,10 +15,11 @@ let db = mongoose.connection
 db.on('error', console.error.bind(console, 'Error while connecting to MongoDB'))
 
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: false }))
 
 // routes
-app.use('/albums', require('./routes/albums.route'))
+const albums = require('./routes/albums.route')
+app.use('/albums', albums)
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
