@@ -15,7 +15,7 @@ app.use(express.static('data'))
 
 // get list of albuns
 app.get('/', (req, res) => {
-    fs.readFile(dataPath, 'utf-8', (err,data) => {
+    fs.readFile(dataPath, 'utf-8', (err, data) => {
         if (err) throw err
 
         res.send(JSON.parse(data))
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 // get list of images by album
 app.get('/:album', (req, res) => {
-    fs.readFile(dataPath, 'utf-8', (err,data) => {
+    fs.readFile(dataPath, 'utf-8', (err, data) => {
         if (err) throw err
 
         const album = req.params['album']
@@ -34,8 +34,14 @@ app.get('/:album', (req, res) => {
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
+    // check if data folder exists and create if needed
     if (!fs.existsSync("./data")) {
         console.log("Creating data folder")
         fs.mkdir("./data")
+    }
+    // check if images_album.json exists and create if needed
+    if (!fs.existsSync(dataPath)) {
+        console.log("Creating images_album.json")
+        fs.writeFile(dataPath, {})
     }
 });
