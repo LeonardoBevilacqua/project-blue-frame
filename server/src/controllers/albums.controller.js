@@ -6,7 +6,7 @@ exports.create = (req, res) => {
     let album = new Album(
         {
             name: req.body.name,
-            url: req.body.url,
+            album: req.body.album,
             description: req.body.description
         }
     )
@@ -18,13 +18,27 @@ exports.create = (req, res) => {
     })
 }
 
-exports.test = (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/audi_r8_chrome_cw_5_matte_black_black_side_view_97060_1920x1080.jpg'))
+exports.getImageById = (req, res) => {
+    res.sendFile(path.join(__dirname, `../public/${req.params.id}.jpg`), (err) => {
+        if (err) throw err
+    })
 }
 
 exports.getById = (req, res) => {
     Album.findById(req.params.id, (err, album) => {
         if (err) throw err
         res.send(album)
+    })
+}
+
+exports.getAll = (req, res) => {
+    Album.find({}, (err, albums) => {
+        res.send(albums)
+    })
+}
+
+exports.getAllByAlbum = (req, res) => {
+    Album.find({ album: req.params.album }, (err, albums) => {
+        res.send(albums)
     })
 }
