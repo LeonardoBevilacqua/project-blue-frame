@@ -18,11 +18,12 @@ db.on('error', console.error.bind(console, 'Error while connecting to MongoDB'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 // cors
-app.use((req,res,next) => {
+app.use((req, res, next) => {
     // permission
     res.header("Access-Control-Allow-Origin", "*")
     // methods
     res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE')
+    res.header('Access-Control-Allow-Headers', 'Content-Type')
     app.use(cors())
     next()
 })
