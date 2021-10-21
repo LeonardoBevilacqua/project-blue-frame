@@ -16,9 +16,9 @@ function App() {
 			const appService = new AppService();
 			const { data } = await appService.getImages();
 			setImages(data);
-			setBackImage(data[index]['download_url']);
-			setFrontImage(data[index + 1]['download_url']);
-			setIndex(2);
+			setBackImage(`http://localhost:5000/albums/image/${data[index]['_id']}`);
+			setIndex(1);
+			setFrontImage(`http://localhost:5000/albums/image/${data[index]['_id']}`);
 		};
 
 		getImages();
@@ -28,7 +28,7 @@ function App() {
 	useEffect(
 		() => {
 			const interval = setInterval(() => {
-				console.log(`This will run each ${transitionTime} second!`);
+				//console.log(`This will run each ${transitionTime} second!`);
 				setBackAndFrontImages();
 			}, 1000 * transitionTime);
 
@@ -36,13 +36,13 @@ function App() {
 				if (images.length) {
 					setFrontImageHidden(!frontImageHidden);
 					const timer = setTimeout(() => {
-						console.log(`This will run after ${animationTime} second!`);
+						setIndex(index + 1 >= images.length ? 0 : index + 1);
+						//console.log(`This will run after ${animationTime} second!`, `current index ${index} of ${images.length}`);
 						if (frontImageHidden) {
-							setFrontImage(images[index]['download_url']);
+							setFrontImage(`http://localhost:5000/albums/image/${images[index]['_id']}`);
 						} else {
-							setBackImage(images[index]['download_url']);
+							setBackImage(`http://localhost:5000/albums/image/${images[index]['_id']}`);
 						}
-						setIndex(index + 1 !== images.length ? index + 1 : 0);
 						clearTimeout(timer);
 					}, 1000 * animationTime);
 				}

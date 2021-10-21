@@ -5,7 +5,7 @@ export class ApplicationService {
 
     constructor() {
         this.api = axios.create({
-            baseURL: ''
+            baseURL: 'http://localhost:5000'
         })
     }
 
