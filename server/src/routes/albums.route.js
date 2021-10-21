@@ -6,6 +6,8 @@ const router = express.Router()
 const albums_controller = require('../controllers/albums.controller')
 
 router.post('/', albums_controller.create)
+router.post('/image/:id', albums_controller.upload.single('image'), albums_controller.createImage)
+
 router.get('/', albums_controller.getAll)
 router.get('/image/:id', albums_controller.getImageById)
 router.get('/album/:album', albums_controller.getAllByAlbum)
