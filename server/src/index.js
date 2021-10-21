@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const app = express()
 
@@ -16,6 +17,15 @@ db.on('error', console.error.bind(console, 'Error while connecting to MongoDB'))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+// cors
+app.use((req,res,next) => {
+    // permission
+    res.header("Access-Control-Allow-Origin", "*")
+    // methods
+    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE')
+    app.use(cors())
+    next()
+})
 
 // routes
 const albums = require('./routes/albums.route')
