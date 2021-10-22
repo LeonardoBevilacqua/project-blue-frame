@@ -4,8 +4,8 @@ const cors = require('cors')
 
 const app = express()
 
-const mongoUrl = 'mongodb://localhost:27017/blueFrame'
-const hostname = '127.0.0.1'
+const mongoUrl = 'mongodb://localhost:27017/blueFrame' // TODO Add env
+const hostname = '0.0.0.0'
 const port = 5000
 
 let mongoDB = process.env.MONGODB_URI || mongoUrl

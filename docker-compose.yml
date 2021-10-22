@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  client:
+    container_name: project-blue-frame-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - './client:/app'
+      - '/app/node_modules'
+    ports:
+      - '3001:3000'
+    links:
+      - "server:server"
+  server:
+    container_name: project-blue-frame-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    # volumes:
+    #   - './server:/app'
+    #   - '/app/node_modules'
+    ports:
+      - '5000:5000'
+    links:
+      - mongodb
+    networks:
+      - mongo-compose-network
+  mongodb:
+    container_name: project-blue-frame-mongo
+    image: mongo
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - mongo-compose-network
+
+networks: 
+    mongo-compose-network:
+      driver: bridge
