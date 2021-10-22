@@ -4,17 +4,18 @@ import { useForm } from 'react-hook-form';
 
 function Admin() {
 	type FormValues = {
-		name: string;
 		album: string;
-		image: FileList;
+		images: File[];
 	};
 	const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
 	const onSubmit = async (form: FormValues) => {
 		const appService = new AppService();
 
-		const { data } = await appService.postAlbum({ name: form.name, album: form.album });
-        appService.postAlbumImage(data['_id'], form.image[0])
+		for (const image of form.images) {
+			const { data } = await appService.postAlbum({ name: image.name, album: form.album });
+			appService.postAlbumImage(data['_id'], image);
+		}
 	};
 
 	return (
@@ -22,18 +23,14 @@ function Admin() {
 			<h1>Admin</h1>
 			<form>
 				<div>
-					<label htmlFor="name">Name</label>
-					<input type="text" {...register('name')} id="name" />
-				</div>
-				<div>
 					<label htmlFor="album">Album</label>
 					<input type="text" {...register('album', { required: true })} id="album" />
 					{errors.album && <p>Required</p>}
 				</div>
 				<div>
 					<label htmlFor="image">Image</label>
-					<input type="file" {...register('image', { required: true })} id="image" />
-					{errors.image && <p>Required</p>}
+					<input type="file" {...register('images', { required: true })} id="images" multiple={true} />
+					{errors.images && <p>Required</p>}
 				</div>
 				<div>
 					<button type="submit">Send</button>
