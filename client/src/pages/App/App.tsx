@@ -15,10 +15,12 @@ function App() {
 		const getImages = async () => {
 			const appService = new AppService();
 			const { data } = await appService.getImages();
-			setImages(data);
-			setBackImage(`http://localhost:5000/albums/image/${data[index]['_id']}`);
-			setIndex(1);
-			setFrontImage(`http://localhost:5000/albums/image/${data[index]['_id']}`);
+			if (data.length) {
+				setImages(data);
+				setBackImage(`http://localhost:5000/albums/image/${data[index]['_id']}`);
+				setIndex(1);
+				setFrontImage(`http://localhost:5000/albums/image/${data[index]['_id']}`);
+			}
 		};
 
 		getImages();
