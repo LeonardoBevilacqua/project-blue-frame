@@ -19,23 +19,31 @@ function Admin() {
 	};
 
 	return (
-		<div onSubmit={handleSubmit(onSubmit)}>
-			<h1>Admin</h1>
-			<form>
-				<div>
-					<label htmlFor="album">Album</label>
-					<input type="text" {...register('album', { required: true })} id="album" />
-					{errors.album && <p>Required</p>}
-				</div>
-				<div>
-					<label htmlFor="image">Image</label>
-					<input type="file" {...register('images', { required: true })} id="images" multiple={true} />
-					{errors.images && <p>Required</p>}
-				</div>
-				<div>
+		<div className="admin-container">
+			<div className="box">
+				<h1>Admin</h1>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<h2>Add images to album</h2>
+					<div className="row">
+						<div>
+							<label htmlFor="album">Album</label>
+							<input type="text" {...register('album', { required: true })} id="album" />
+							{errors.album && <p>Required</p>}
+						</div>
+						<div>
+							<label htmlFor="image">Image</label>
+							<input
+								type="file"
+								{...register('images', { required: true })}
+								id="images"
+								multiple={true}
+							/>
+							{errors.images && <p>Required</p>}
+						</div>
+					</div>
 					<button type="submit">Send</button>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	);
 }
