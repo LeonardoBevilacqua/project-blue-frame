@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .overlay-image {
+            opacity: 0%;
+            transition: opacity 2s
+        }
+
+        .overlay-image:hover {
+            opacity: 100%;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .background {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("http://lorempixel.com/800/600/cats");
+            background-repeat: no-repeat;
+            background-size: cover;
+            -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px);
+        }
+
+        .image-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="background"></div>
+        <div class="image-container">
+            <img src="http://lorempixel.com/800/600/cats">
+        </div>
+        <div class="image-container overlay-image">
+            <img src="https://source.unsplash.com/fk4tiMlDFF0/800x600/">
+        </div>
+    </div>
+</body>
+
+</html>
