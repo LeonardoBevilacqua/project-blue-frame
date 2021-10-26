@@ -24,3 +24,6 @@
     * Adding album management;
     * Allow to select album to display;
     * Fix issues related with pi 3b+.
+* Future Plans for v2.0:
+  * Change frontend framework, try svelte or pure javascrict;
+  * Change database for another noSQL with arm64 suport.
