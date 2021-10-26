@@ -23,6 +23,7 @@
   * Future plans for v1.1:
     * Adding album management;
     * Allow to select album to display;
+    * Add [UIKit](https://getuikit.com/);
     * Fix issues related with pi 3b+.
 * Future Plans for v2.0:
   * Change frontend framework, try svelte or pure javascrict;
