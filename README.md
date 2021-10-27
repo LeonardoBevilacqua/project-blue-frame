@@ -24,7 +24,8 @@
     * Adding album management;
     * Allow to select album to display;
     * Add [UIKit](https://getuikit.com/);
-    * Fix issues related with pi 3b+.
+    * Fix issues related with pi 3b+;
+    * Migrate to next.js.
 * Future Plans for v2.0:
   * Change frontend framework, try svelte or pure javascrict;
   * Change database for another noSQL with arm64 suport.
