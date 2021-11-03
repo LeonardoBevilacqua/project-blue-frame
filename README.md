@@ -19,7 +19,7 @@
     * [x] Should allow the user to create albuns (folders) to be displayed.
   * Issues:
     * There is no arm64 version of mongo in docker;
-    * React is faling in raspberry pi 3b+;
+    * React is failing in raspberry pi 3b+;
   * Future plans for v1.1:
     * Adding album management;
     * Allow to select album to display;
