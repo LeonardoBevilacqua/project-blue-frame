@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 services:
   client:
     container_name: project-blue-frame-client
@@ -10,8 +10,8 @@ services:
       - '/app/node_modules'
     ports:
       - '3001:3000'
-    links:
-      - "server:server"
+#    links:
+#      - "server:server"
   server:
     container_name: project-blue-frame-server
     build:
@@ -28,17 +28,18 @@ services:
       - mongo-compose-network
   mongodb:
     container_name: project-blue-frame-mongo
-    image: mongo
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: root
-    #   MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
+    image: andresvidal/rpi3-mongodb3
     ports:
       - "27017:27017"
     volumes:
-      - ./mongo:/data/db
+      - db:/data/db
+      - dbcfg:/data/configdb
     networks:
       - mongo-compose-network
 
 networks: 
     mongo-compose-network:
       driver: bridge
+volumes:
+    db:
+    dbcfg:
