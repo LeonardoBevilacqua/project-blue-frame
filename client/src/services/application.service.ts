@@ -5,7 +5,7 @@ export class ApplicationService {
 
     constructor() {
         this.api = axios.create({
-            baseURL: 'http://localhost:5000' // TODO Add env
+            baseURL: 'http://server:5000' // TODO Add env
         })
     }
 
