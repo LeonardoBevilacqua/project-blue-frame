@@ -7,7 +7,7 @@ COPY . .
 # install node modules and build assets
 RUN yarn install && yarn build
 
-FROM nginx:alpine
+FROM nginx:latest
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
 # Remove default nginx static assets
