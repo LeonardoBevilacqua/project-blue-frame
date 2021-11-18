@@ -20,11 +20,11 @@
   * Issues:
     * There is no arm64 version of mongo in docker;
     * React is failing in raspberry pi 3b+;
-  v2.0:
+* v2.0:
   * [x] Changed frontend framework from react to svelte;
   * [x] Changed database from mongoDb to postgres due to issues with Raspberry Pi.
   * [x] Updated docker files and compose.
-  v2.1:
+* v2.1:
   * [ ] Update admin page with UiKit.
   * [ ] Display upload progress.
   * [ ] List saved images.
