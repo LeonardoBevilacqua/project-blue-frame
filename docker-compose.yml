@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  client:
+    container_name: project-blue-frame-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '8080:80'
+    networks:
+      - client-server
+  server:
+    container_name: project-blue-frame-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - '5000:5000'
+    volumes:
+      - appPublic:/app/src/public
+    links:
+      - postgresdb
+    networks:
+      - postgres-compose-network
+      - client-server
+    restart: always
+  postgresdb:
+    container_name: project-blue-frame-db
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=Qppq1997
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql
+      - ./db:/docker-entrypoint-initdb.d/
+    networks:
+      - postgres-compose-network
+
+networks: 
+    postgres-compose-network:
+      driver: bridge
+    client-server:
+      driver: bridge
+volumes:
+    db:
+    appPublic:
