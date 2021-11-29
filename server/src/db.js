@@ -1,7 +1,7 @@
 
 const { Sequelize } = require('sequelize');
 
-const mongoDB = process.env.POSTGRESDB_URI || 'postgres://postgres:Qppq1997@localhost:5432/blueFrame'
+const mongoDB = process.env.POSTGRESDB_URI || 'postgres://postgres:Qppq1997@localhost:5432/blueframe'
 const sequelize = new Sequelize(mongoDB, { dialect: 'postgres' });
 
 // check connection
