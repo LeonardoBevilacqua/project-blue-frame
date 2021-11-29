@@ -8,36 +8,43 @@
 	let frontImage = "";
 	let transitionTime = 5;
 	let animationTime = 2;
-	let index = 0;
+	let index = 1;
 
 	onMount(async () => {
 		const appService = new AppService();
 		const data: any[] = await appService.getImages();
 		if (data.length) {
 			images = data;
-			backImage = `${process.env.serverUrl || "http://localhost:5000"}/albums/image/${data[index]["id"]}`;
-			index = 1;
-			frontImage = `${process.env.serverUrl || "http://localhost:5000"}/albums/image/${data[index]["id"]}`;
+			const nextImageUrl = `${process.env.serverUrl || "http://localhost:5000"}/albums/image`;
+			backImage = `${nextImageUrl}/${data[0]["id"]}`;
+			frontImage = `${nextImageUrl}/${data[1]["id"]}`;
 		}
 
 		setInterval(() => {
-			//console.log(`This will run each ${transitionTime} second!`);
-			setBackAndFrontImages();
+			imageTransition();
 		}, 1000 * transitionTime);
 	});
 
-	const setBackAndFrontImages = () => {
+	const imageTransition = () => {
 		if (images.length) {
-			frontImageHidden = !frontImageHidden;
-			index = index + 1 >= images.length ? 0 : index + 1;
-			//console.log(`This will run after ${animationTime} second!`, `current index ${index} of ${images.length}`);
-			if (frontImageHidden) {
-				frontImage = `${process.env.serverUrl || "http://localhost:5000"}/albums/image/${images[index]["id"]}`;
-			} else {
-				backImage = `${process.env.serverUrl || "http://localhost:5000"}/albums/image/${images[index]["id"]}`;
-			}
+			switchImages()
+			sleep(1000 * animationTime).then(() => loadNextImage())
 		}
 	};
+
+	const switchImages = () => {
+		frontImageHidden = !frontImageHidden;
+	}
+
+	const loadNextImage = () => {
+		index = index + 1 >= images.length ? 0 : index + 1;
+		const nextImageUrl = `${process.env.serverUrl || "http://localhost:5000"}/albums/image/${images[index]["id"]}`
+		!frontImageHidden ? frontImage = nextImageUrl : backImage = nextImageUrl
+	}
+
+	const sleep = (milliseconds) => {
+		return new Promise(resolve => setTimeout(resolve, milliseconds))
+	}
 </script>
 
 <div class="container">
@@ -96,11 +103,11 @@
 		height: 100vh;
 		background-repeat: no-repeat;
 		background-size: cover;
-		-webkit-filter: blur(5px);
-		-moz-filter: blur(5px);
-		-o-filter: blur(5px);
-		-ms-filter: blur(5px);
-		filter: blur(5px);
+		-webkit-filter: blur(30px);
+		-moz-filter: blur(30px);
+		-o-filter: blur(30px);
+		-ms-filter: blur(30px);
+		filter: blur(30px);
 	}
 
 	.background > img {
