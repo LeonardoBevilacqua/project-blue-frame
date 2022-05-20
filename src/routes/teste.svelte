@@ -34,7 +34,6 @@
 	let timeout: NodeJS.Timeout;
 
 	function showSlides() {
-		let i;
 		for (const image of images) {
 			image.active = false;
 		}
@@ -52,31 +51,14 @@
 </script>
 
 <!-- Slideshow container -->
-<div class="w-full relative m-auto">
-	<!-- Full-width images -->
-    <div class="grid grid-cols-[1fr]">
-        {#each images as image, index (image.id)}
-            <ImageContainer bind:image {index} length={images.length} />
-        {/each}
-    </div>
-
-	<!-- Next/Previous buttons -->
-	<button
-		class="absolute top-1/2 w-auto mt-[-22px] p-4 text-white font-bold text-[18px] rounded-tr-sm rounded-br-sm hover:bg-black/80"
-		>&#10094;</button
-	>
-	<button
-		class="absolute top-1/2 w-auto mt-[-22px] p-4 text-white font-bold text-[18px] rounded-tl-sm rounded-bl-sm hover:bg-black/80 right-0"
-		>&#10095;</button
-	>
-</div>
-<!-- Dots -->
-<div class="text-center mt-3">
-	{#each images as image (image.id)}
-		<span
-			class="dot cursor-pointer h-4 w-4 mx-1 rounded-full inline-block {image.active
-				? 'bg-gray-900'
-				: 'bg-gray-600'} hover:bg-gray-900"
-		/>
-	{/each}
+<div>
+	<div>
+		<!-- Full-width images -->
+		<div class="grid grid-cols-[1fr]">
+			{#each images as image (image.id)}
+				<ImageContainer background={true} bind:image />
+                <ImageContainer bind:image />
+			{/each}
+		</div>
+	</div>
 </div>

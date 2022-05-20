@@ -5,18 +5,22 @@
 		title: string;
 		active: boolean;
 	};
-	export let index: number;
-	export let length: number;
+	export let background = false;
 </script>
 
 <div
 	class="row-start-1 col-start-1 transition-opacity duration-1000 {image.active
 		? 'opacity-100'
 		: 'opacity-0'}"
+	class:z-10={!background}
+	class:m-auto={!background}
+	class:h-screen={background}
 >
-	<div class="text-gray-500 text-[12px] py-2 px-3 absolute top-0">{++index} / {length}</div>
-	<img class="w-full" src={image.src} alt={image.title} />
-	<div class="text-gray-500 text-[15px] py-2 px-3 absolute bottom-2 w-full text-center">
-		{image.title}
-	</div>
+	<img
+		class="w-full"
+		class:h-full={background}
+		class:blur-sm={background}
+		src={image.src}
+		alt={image.title}
+	/>
 </div>
