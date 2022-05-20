@@ -1,26 +1,48 @@
 <!-- Source https://www.w3schools.com/howto/howto_js_slideshow.asp -->
 <script lang="ts">
+	import ImageContainer from '$lib/ImageContainer.svelte';
 	import { onDestroy, onMount } from 'svelte';
+
+	const images = [
+		{
+			id: 1,
+			src: 'https://picsum.photos/seed/picsum01/500/150',
+			title: 'Teste 01',
+			active: false
+		},
+		{
+			id: 2,
+			src: 'https://picsum.photos/seed/picsum02/500/150',
+			title: 'Teste 02',
+			active: false
+		},
+		{
+			id: 3,
+			src: 'https://picsum.photos/seed/picsum03/500/150',
+			title: 'Teste 03',
+			active: false
+		},
+		{
+			id: 4,
+			src: 'https://picsum.photos/seed/picsum04/500/150',
+			title: 'Teste 04',
+			active: false
+		}
+	];
 
 	let slideIndex = 0;
 	let timeout: NodeJS.Timeout;
 
 	function showSlides() {
 		let i;
-		let slides = document.getElementsByClassName('mySlides');
-		let dots = document.getElementsByClassName('dot');
-		for (i = 0; i < slides.length; i++) {
-			slides[i].style.display = 'none';
-		}
+        for (const image of images) {
+            image.active = false;
+        }
 		slideIndex++;
-		if (slideIndex > slides.length) {
+		if (slideIndex > images.length) {
 			slideIndex = 1;
 		}
-		for (i = 0; i < dots.length; i++) {
-			dots[i].className = dots[i].className.replace(' bg-gray-900', '');
-		}
-		slides[slideIndex - 1].style.display = 'block';
-		dots[slideIndex - 1].className += ' bg-gray-900';
+		images[slideIndex - 1].active = true;
 		timeout = setTimeout(showSlides, 2000); // Change image every 2 seconds
 	}
 
@@ -32,37 +54,9 @@
 <!-- Slideshow container -->
 <div class="w-full relative m-auto">
 	<!-- Full-width images -->
-	<div class="mySlides">
-		<div class="text-gray-100 text-[12px] py-2 px-3 absolute top-0">1 / 4</div>
-		<img class="w-full" src="https://picsum.photos/seed/picsum1/500/150" alt="teste 01" />
-		<div class="text-gray-100 text-[15px] py-2 px-3 absolute bottom-2 w-full text-center">
-			teste 01
-		</div>
-	</div>
-
-	<div class="mySlides">
-		<div class="text-gray-100 text-[12px] py-2 px-3 absolute top-0">2 / 4</div>
-		<img class="w-full" src="https://picsum.photos/seed/picsum2/500/150" alt="teste 02" />
-		<div class="text-gray-100 text-[15px] py-2 px-3 absolute bottom-2 w-full text-center">
-			teste 02
-		</div>
-	</div>
-
-	<div class="mySlides">
-		<div class="text-gray-100 text-[12px] py-2 px-3 absolute top-0">3 / 4</div>
-		<img class="w-full" src="https://picsum.photos/seed/picsum3/500/150" alt="teste 03" />
-		<div class="text-gray-100 text-[15px] py-2 px-3 absolute bottom-2 w-full text-center">
-			teste 03
-		</div>
-	</div>
-
-	<div class="mySlides">
-		<div class="text-gray-100 text-[12px] py-2 px-3 absolute top-0">4 / 4</div>
-		<img class="w-full" src="https://picsum.photos/seed/picsum4/500/150" alt="teste 04" />
-		<div class="text-gray-100 text-[15px] py-2 px-3 absolute bottom-2 w-full text-center">
-			teste 04
-		</div>
-	</div>
+	{#each images as image, index (image.id)}
+		<ImageContainer bind:image {index} length={images.length} />
+	{/each}
 
 	<!-- Next/Previous buttons -->
 	<button
@@ -76,22 +70,9 @@
 </div>
 <!-- Dots -->
 <div class="text-center mt-3">
-	<span
-		class="dot cursor-pointer h-4 w-4 mx-1 bg-gray-600 rounded-full inline-block hover:bg-gray-900"
-	/>
-	<span
-		class="dot cursor-pointer h-4 w-4 mx-1 bg-gray-600 rounded-full inline-block hover:bg-gray-900"
-	/>
-	<span
-		class="dot cursor-pointer h-4 w-4 mx-1 bg-gray-600 rounded-full inline-block hover:bg-gray-900"
-	/>
-	<span
-		class="dot cursor-pointer h-4 w-4 mx-1 bg-gray-600 rounded-full inline-block hover:bg-gray-900"
-	/>
+	{#each images as image (image.id)}
+		<span
+			class="dot cursor-pointer h-4 w-4 mx-1 rounded-full inline-block {image.active ? 'bg-gray-900' : 'bg-gray-600'} hover:bg-gray-900"
+		/>
+	{/each}
 </div>
-
-<style>
-	.mySlides {
-		display: none;
-	}
-</style>
