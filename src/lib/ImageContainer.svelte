@@ -17,9 +17,9 @@
 	class:h-screen={background}
 >
 	<img
-		class="w-full"
+		class="w-full max-h-screen"
 		class:h-full={background}
-		class:blur-sm={background}
+		class:blur-lg={background}
 		src={image.src}
 		alt={image.title}
 	/>
