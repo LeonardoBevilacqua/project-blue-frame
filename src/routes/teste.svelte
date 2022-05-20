@@ -6,25 +6,25 @@
 	const images = [
 		{
 			id: 1,
-			src: 'https://picsum.photos/seed/picsum01/500/150',
+			src: 'https://picsum.photos/seed/picsum01/1920/1080',
 			title: 'Teste 01',
 			active: false
 		},
 		{
 			id: 2,
-			src: 'https://picsum.photos/seed/picsum02/500/150',
+			src: 'https://picsum.photos/seed/picsum02/1920/1080',
 			title: 'Teste 02',
 			active: false
 		},
 		{
 			id: 3,
-			src: 'https://picsum.photos/seed/picsum03/500/150',
+			src: 'https://picsum.photos/seed/picsum03/1920/1080',
 			title: 'Teste 03',
 			active: false
 		},
 		{
 			id: 4,
-			src: 'https://picsum.photos/seed/picsum04/500/150',
+			src: 'https://picsum.photos/seed/picsum04/1920/1080',
 			title: 'Teste 04',
 			active: false
 		}
@@ -35,9 +35,9 @@
 
 	function showSlides() {
 		let i;
-        for (const image of images) {
-            image.active = false;
-        }
+		for (const image of images) {
+			image.active = false;
+		}
 		slideIndex++;
 		if (slideIndex > images.length) {
 			slideIndex = 1;
@@ -54,9 +54,11 @@
 <!-- Slideshow container -->
 <div class="w-full relative m-auto">
 	<!-- Full-width images -->
-	{#each images as image, index (image.id)}
-		<ImageContainer bind:image {index} length={images.length} />
-	{/each}
+    <div class="grid grid-cols-[1fr]">
+        {#each images as image, index (image.id)}
+            <ImageContainer bind:image {index} length={images.length} />
+        {/each}
+    </div>
 
 	<!-- Next/Previous buttons -->
 	<button
@@ -72,7 +74,9 @@
 <div class="text-center mt-3">
 	{#each images as image (image.id)}
 		<span
-			class="dot cursor-pointer h-4 w-4 mx-1 rounded-full inline-block {image.active ? 'bg-gray-900' : 'bg-gray-600'} hover:bg-gray-900"
+			class="dot cursor-pointer h-4 w-4 mx-1 rounded-full inline-block {image.active
+				? 'bg-gray-900'
+				: 'bg-gray-600'} hover:bg-gray-900"
 		/>
 	{/each}
 </div>
