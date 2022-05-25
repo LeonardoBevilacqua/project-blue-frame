@@ -57,7 +57,7 @@
 		<div class="grid grid-cols-[1fr]">
 			{#each images as image (image.id)}
 				<ImageContainer background={true} bind:image />
-                <ImageContainer bind:image />
+				<ImageContainer bind:image />
 			{/each}
 		</div>
 	</div>
