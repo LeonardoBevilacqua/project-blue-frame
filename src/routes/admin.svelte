@@ -40,24 +40,31 @@ import Button from "$lib/global/Button.svelte";
 	}
 </script>
 
-<div class="flex flex-col items-center gap-3 m-3">
-	<img
-		id="imagePreview"
-		width="300"
-		height="300"
-		src={imagePreview ? imagePreview : 'https://via.placeholder.com/300.png/09f/fff'}
-		alt="Preview"
-	/>
-	<input
-		class="hidden"
-		id="file-to-upload"
-		type="file"
-		accept=".png,.jpg"
-		bind:files
-		bind:this={fileInput}
-		on:change={displayImagePreview}
-	/>
+ <main class="h-screen w-screen flex items-center justify-center bg-gray-300 dark:bg-gray-800">
+	<div class="grid grid-flow-col gap-3 p-3 items-center bg-fuchsia-200">
+		<div class="flex flex-col items-center gap-3">
+			<img
+				id="imagePreview"
+				width="300"
+				height="300"
+				src={imagePreview ? imagePreview : 'https://via.placeholder.com/300.png/09f/fff'}
+				alt="Preview"
+			/>
+			<input
+				class="hidden"
+				id="file-to-upload"
+				type="file"
+				accept=".png,.jpg"
+				bind:files
+				bind:this={fileInput}
+				on:change={displayImagePreview}
+			/>
+			<Button on:click={() => fileInput.click()}>Browse</Button>
+		</div>
 
-	<Button on:click={() => fileInput.click()}>Select image</Button>
-	<Button on:click={uploadImage}>Upload</Button>
-</div>
+		<div class="flex flex-col justify-center h-full gap-3">
+			<input class="mt-auto mb-auto" type="text" placeholder="Album">
+			<Button on:click={uploadImage}>Upload</Button>
+		</div>
+	</div>
+</main>
