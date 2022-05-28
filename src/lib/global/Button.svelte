@@ -1,4 +1,4 @@
 <button
-		class="bg-black hover:bg-gray-200 text-gray-200 hover:text-black hover:outline border-0 font-sans font-bold px-8 py-2 text-base transition-all"
+		class="bg-blue-400 hover:bg-blue-500 text-gray-200 shadow-md rounded-md border-0 font-sans font-bold px-8 py-2 text-base transition-all duration-700"
 		on:click><slot /></button
 	>

@@ -1,5 +1,5 @@
 <script lang="ts">
-import Button from "$lib/global/Button.svelte";
+	import Button from '$lib/global/Button.svelte';
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
@@ -40,11 +40,14 @@ import Button from "$lib/global/Button.svelte";
 	}
 </script>
 
- <main class="h-screen w-screen flex items-center justify-center bg-gray-300 dark:bg-gray-800">
-	<div class="grid grid-flow-col gap-3 p-3 items-center bg-fuchsia-200">
+<main class="h-screen w-screen flex items-center justify-center bg-gray-200 dark:bg-gray-600">
+	<div
+		class="grid grid-flow-col gap-3 p-3 items-center rounded-md bg-gray-300 dark:bg-slate-700 shadow-md"
+	>
 		<div class="flex flex-col items-center gap-3">
 			<img
 				id="imagePreview"
+				class="rounded-md shadow-sm"
 				width="300"
 				height="300"
 				src={imagePreview ? imagePreview : 'https://via.placeholder.com/300.png/09f/fff'}
@@ -63,7 +66,11 @@ import Button from "$lib/global/Button.svelte";
 		</div>
 
 		<div class="flex flex-col justify-center h-full gap-3">
-			<input class="mt-auto mb-auto" type="text" placeholder="Album">
+			<input
+				class="mt-auto mb-auto bg-gray-200 dark:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 dark:focus-visible:outline-cyan-600 p-2 rounded-sm shadow-sm"
+				type="text"
+				placeholder="Album"
+			/>
 			<Button on:click={uploadImage}>Upload</Button>
 		</div>
 	</div>
