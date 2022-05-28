@@ -1,22 +1,23 @@
 <script lang="ts">
+import Button from "$lib/global/Button.svelte";
+
 	let fileInput: HTMLInputElement;
 	let files: FileList;
-	let avatar: string | ArrayBuffer | null | undefined;
+	let imagePreview: string | ArrayBuffer | null | undefined;
 
 	function getBase64(image: Blob) {
 		const reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = (e: ProgressEvent<FileReader>) => {
-			avatar = e.target?.result;
-            uploadFunction(avatar);
+			imagePreview = e.target?.result;
 		};
 	}
 
 	async function uploadFunction(imgBase64: string | ArrayBuffer | null | undefined) {
-		const data = {image: ''};
-        if (!imgBase64) {
-            return
-        }
+		const data = { image: '' };
+		if (!imgBase64) {
+			return;
+		}
 		const imgData = imgBase64.toString().split(',');
 		data.image = imgData[1];
 		console.log(data);
@@ -31,12 +32,14 @@
 	}
 </script>
 
-<div class="container">
-	{#if avatar}
-		<img id="avatar" src={avatar.toString()} alt="avatar" />
-	{:else}
-		<img id="avatar" src="avatar.png" alt="avatar" />
-	{/if}
+<div class="flex flex-col items-center gap-3 m-3">
+	<img
+		id="imagePreview"
+		width="300"
+		height="300"
+		src={imagePreview ? imagePreview.toString() : 'https://via.placeholder.com/300.png/09f/fff'}
+		alt="Preview"
+	/>
 	<input
 		class="hidden"
 		id="file-to-upload"
@@ -46,40 +49,7 @@
 		bind:this={fileInput}
 		on:change={() => getBase64(files[0])}
 	/>
-	<button class="upload-btn" on:click={() => fileInput.click()}>Upload</button>
+
+	<Button on:click={() => fileInput.click()}>Select image</Button>
+	<Button on:click={() => uploadFunction(imagePreview)}>Upload</Button>
 </div>
-
-<style>
-	.container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	#avatar {
-		border-radius: 99999px;
-		height: 128px;
-		width: 128px;
-		margin-bottom: 10px;
-	}
-
-	.hidden {
-		display: none;
-	}
-
-	.upload-btn {
-		width: 128px;
-		height: 32px;
-		background-color: black;
-		font-family: sans-serif;
-		color: white;
-		font-weight: bold;
-		border: none;
-	}
-
-	.upload-btn:hover {
-		background-color: white;
-		color: black;
-		outline: black solid 2px;
-	}
-</style>
