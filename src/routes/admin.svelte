@@ -3,22 +3,30 @@ import Button from "$lib/global/Button.svelte";
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
-	let imagePreview: string | ArrayBuffer | null | undefined;
+	let imagePreview: string;
 
-	function getBase64(image: Blob) {
+	/**
+	 * Method responsible to get image base 64 from the first file
+	 */
+	function displayImagePreview() {
+		const image = files[0];
 		const reader = new FileReader();
+
 		reader.readAsDataURL(image);
 		reader.onload = (e: ProgressEvent<FileReader>) => {
-			imagePreview = e.target?.result;
+			imagePreview = e.target?.result?.toString() ?? '';
 		};
 	}
 
-	async function uploadFunction(imgBase64: string | ArrayBuffer | null | undefined) {
+	/**
+	 * Method responsible to upload the image to server
+	 */
+	async function uploadImage() {
 		const data = { image: '' };
-		if (!imgBase64) {
+		if (!imagePreview) {
 			return;
 		}
-		const imgData = imgBase64.toString().split(',');
+		const imgData = imagePreview.split(',');
 		data.image = imgData[1];
 		console.log(data);
 		await fetch(`/upload`, {
@@ -37,7 +45,7 @@ import Button from "$lib/global/Button.svelte";
 		id="imagePreview"
 		width="300"
 		height="300"
-		src={imagePreview ? imagePreview.toString() : 'https://via.placeholder.com/300.png/09f/fff'}
+		src={imagePreview ? imagePreview : 'https://via.placeholder.com/300.png/09f/fff'}
 		alt="Preview"
 	/>
 	<input
@@ -47,9 +55,9 @@ import Button from "$lib/global/Button.svelte";
 		accept=".png,.jpg"
 		bind:files
 		bind:this={fileInput}
-		on:change={() => getBase64(files[0])}
+		on:change={displayImagePreview}
 	/>
 
 	<Button on:click={() => fileInput.click()}>Select image</Button>
-	<Button on:click={() => uploadFunction(imagePreview)}>Upload</Button>
+	<Button on:click={uploadImage}>Upload</Button>
 </div>
