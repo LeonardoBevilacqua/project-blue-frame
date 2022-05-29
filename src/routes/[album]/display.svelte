@@ -3,32 +3,21 @@
 	import ImageContainer from '$lib/ImageContainer.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
-	const images = [
-		{
-			id: 1,
-			src: 'https://picsum.photos/seed/picsum01/1920/1080',
-			title: 'Teste 01',
-			active: false
-		},
-		{
-			id: 2,
-			src: 'https://picsum.photos/seed/picsum02/1920/1080',
-			title: 'Teste 02',
-			active: false
-		},
-		{
-			id: 3,
-			src: 'https://picsum.photos/seed/picsum03/1920/1080',
-			title: 'Teste 03',
-			active: false
-		},
-		{
-			id: 4,
-			src: 'https://picsum.photos/seed/picsum04/1920/1080',
-			title: 'Teste 04',
-			active: false
-		}
-	];
+	let images: { id: number; src: string; title: string; active: boolean }[] = [];
+
+	async function getImage() {
+		const response = await fetch('getImages', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			}
+		});
+		const data = await response.json();
+		images = data['content'];
+
+		showSlides()
+	}
 
 	let slideIndex = 0;
 	let timeout: NodeJS.Timeout;
@@ -45,7 +34,7 @@
 		timeout = setTimeout(showSlides, 2000); // Change image every 2 seconds
 	}
 
-	onMount(() => showSlides());
+	onMount(() => getImage());
 
 	onDestroy(() => clearTimeout(timeout));
 </script>
