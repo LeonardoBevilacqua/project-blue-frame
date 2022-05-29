@@ -84,7 +84,7 @@
 				class="rounded-md shadow-sm"
 				width="300"
 				height="300"
-				src={imagePreview ? imagePreview : 'https://via.placeholder.com/300.png/09f/fff'}
+				src={imagePreview ? imagePreview : 'https://via.placeholder.com/300/4b5563/e5e7eb/?text=Upload%20image'}
 				alt="Preview"
 			/>
 			<input
