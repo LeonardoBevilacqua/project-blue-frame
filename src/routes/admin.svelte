@@ -1,13 +1,16 @@
 <script lang="ts">
 	import Button from '$lib/global/Button.svelte';
+	import LoadScreen from '$lib/global/LoadScreen.svelte';
 	import NotificationToast from '$lib/global/NotificationToast.svelte';
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
 	let imagePreview: string;
 	let album: string;
-	let errors: string[] = [];
 	let notificationToast: NotificationToast;
+
+	let errors: string[] = [];
+	let loading = false;
 
 	/**
 	 * Method responsible to get image base 64 from the first file
@@ -51,6 +54,7 @@
 		const reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = (e: ProgressEvent<FileReader>) => {
+			loading = true;
 			const image = e.target?.result?.toString() ?? '';
 			const imgData = image.split(',');
 			data.image = imgData[1];
@@ -62,12 +66,18 @@
 					Accept: 'application/json'
 				},
 				body: JSON.stringify(data)
-			}).finally(() => notificationToast.displayNotification('Image uploaded with success'));
+			}).finally(() => {
+				notificationToast.displayNotification('Image uploaded with success');
+                loading = false;
+			});
 		};
 	}
 </script>
 
 <NotificationToast bind:this={notificationToast} />
+{#if loading}
+	<LoadScreen />
+{/if}
 
 <main class="h-screen w-screen flex items-center justify-center bg-gray-200 dark:bg-gray-600">
 	<div
