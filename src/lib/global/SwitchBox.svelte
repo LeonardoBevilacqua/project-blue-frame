@@ -16,7 +16,7 @@
 		<div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition" />
 	</div>
 	<!-- label -->
-	<div class="ml-3 text-gray-200 font-medium">{label}</div>
+	<div class="ml-3 text-gray-800 dark:text-gray-200 font-medium">{label}</div>
 </label>
 
 <style>
