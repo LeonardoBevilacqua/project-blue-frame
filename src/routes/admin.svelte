@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Button from '$lib/global/Button.svelte';
+	import NotificationToast from '$lib/global/NotificationToast.svelte';
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
 	let imagePreview: string;
 	let album: string;
 	let errors: string[] = [];
+	let notificationToast: NotificationToast;
 
 	/**
 	 * Method responsible to get image base 64 from the first file
@@ -20,6 +22,9 @@
 		};
 	}
 
+	/**
+	 * Method responsible to validate inputs
+	 */
 	function validation() {
 		errors = [];
 
@@ -57,10 +62,12 @@
 					Accept: 'application/json'
 				},
 				body: JSON.stringify(data)
-			});
+			}).finally(() => notificationToast.displayNotification('Image uploaded with success'));
 		};
 	}
 </script>
+
+<NotificationToast bind:this={notificationToast} />
 
 <main class="h-screen w-screen flex items-center justify-center bg-gray-200 dark:bg-gray-600">
 	<div
