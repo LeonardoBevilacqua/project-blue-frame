@@ -8,7 +8,7 @@
 	let files: FileList;
 	let imagePreview: string;
 	let album: string;
-	let clearAlbum: boolean;
+	let clearAlbum = false;
 	let notificationToast: NotificationToast;
 
 	let errors: string[] = [];
@@ -53,37 +53,56 @@
 		}
 	}
 
+    /**
+     * Method responsible to read file
+     * @param file file to be read
+     */
+	function readFile(file: File): Promise<any> {
+		return new Promise((resolve) => {
+			const reader = new FileReader();
+
+			reader.onload = () => resolve([reader.result, file.name]);
+
+			reader.readAsDataURL(file);
+		});
+	}
+
 	/**
 	 * Method responsible to upload the image to server
 	 */
 	async function uploadImage() {
-		const data = { image: '', name: '' };
 		if (!validation()) {
 			return;
 		}
 
-		const image = files[0];
-		const reader = new FileReader();
-		reader.readAsDataURL(image);
-		reader.onload = (e: ProgressEvent<FileReader>) => {
-			loading = true;
-			const image = e.target?.result?.toString() ?? '';
-			const imgData = image.split(',');
-			data.image = imgData[1];
-			data.name = files[0].name;
-			fetch(`${album}/upload`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json'
-				},
-				body: JSON.stringify(data)
-			}).finally(() => {
-				notificationToast.displayNotification('Image uploaded with success');
+		loading = true;
+		let readers: Promise<any>[] = [];
+		Array.from(files).forEach((file) => {
+			readers.push(readFile(file));
+		});
+		Promise.all(readers)
+			.then((images) => {
+				images.forEach((image) => {
+					const imgData = image[0].split(',');
+					const data = { image: '', name: '' };
+
+					data.image = imgData[1];
+					data.name = image[1];
+					fetch(`${album}/upload`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							Accept: 'application/json'
+						},
+						body: JSON.stringify(data)
+					});
+				});
+			})
+			.finally(() => {
+				notificationToast.displayNotification('Images uploaded with success');
 				loading = false;
 				cleanData();
 			});
-		};
 	}
 </script>
 
@@ -109,6 +128,9 @@
 		{/if}
 
 		<div class="row-start-2 flex flex-col items-center gap-3">
+			<span class="text-gray-800 dark:text-gray-200"
+				>{files?.length ? `${files.length} images selected` : 'Select your images'}</span
+			>
 			<div class="h-[300px] flex items-center">
 				<img
 					id="imagePreview"
@@ -117,6 +139,7 @@
 					height="300"
 					src={imagePreview ? imagePreview : '/placeholder.png'}
 					alt="Preview"
+					on:click={() => fileInput.click()}
 				/>
 			</div>
 			<input
@@ -124,6 +147,7 @@
 				id="file-to-upload"
 				type="file"
 				accept=".png,.jpg"
+				multiple
 				bind:files
 				bind:this={fileInput}
 				on:change={displayImagePreview}

@@ -9,7 +9,7 @@
 	<!-- toggle -->
 	<div class="relative">
 		<!-- input -->
-		<input {id} type="checkbox" class="sr-only" role="switch" bind:checked={checked} />
+		<input {id} type="checkbox" class="sr-only" role="switch" bind:checked />
 		<!-- line -->
 		<div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner" />
 		<!-- dot -->
