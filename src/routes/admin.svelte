@@ -2,11 +2,13 @@
 	import Button from '$lib/global/Button.svelte';
 	import LoadScreen from '$lib/global/LoadScreen.svelte';
 	import NotificationToast from '$lib/global/NotificationToast.svelte';
+	import SwitchBox from '$lib/global/SwitchBox.svelte';
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
 	let imagePreview: string;
 	let album: string;
+	let clearAlbum: boolean;
 	let notificationToast: NotificationToast;
 
 	let errors: string[] = [];
@@ -42,6 +44,16 @@
 	}
 
 	/**
+	 * Method responsible to clean the data
+	 */
+	function cleanData() {
+		imagePreview = '';
+		if (clearAlbum) {
+			album = '';
+		}
+	}
+
+	/**
 	 * Method responsible to upload the image to server
 	 */
 	async function uploadImage() {
@@ -68,7 +80,8 @@
 				body: JSON.stringify(data)
 			}).finally(() => {
 				notificationToast.displayNotification('Image uploaded with success');
-                loading = false;
+				loading = false;
+				cleanData();
 			});
 		};
 	}
@@ -96,17 +109,16 @@
 		{/if}
 
 		<div class="row-start-2 flex flex-col items-center gap-3">
-            <div class="h-[300px] flex items-center">
-                <img
-                    id="imagePreview"
-                    class="rounded-md shadow-sm max-h-[300px]"
-                    width="300"
-                    height="300"
-                    src={imagePreview ? imagePreview : '/placeholder.png'}
-                    alt="Preview"
-                />
-
-            </div>
+			<div class="h-[300px] flex items-center">
+				<img
+					id="imagePreview"
+					class="rounded-md shadow-sm max-h-[300px]"
+					width="300"
+					height="300"
+					src={imagePreview ? imagePreview : '/placeholder.png'}
+					alt="Preview"
+				/>
+			</div>
 			<input
 				class="hidden"
 				id="file-to-upload"
@@ -121,12 +133,17 @@
 
 		<div class="row-start-2 flex flex-col justify-center h-full gap-3">
 			<input
-				class="mt-auto mb-auto bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 dark:focus-visible:outline-cyan-600 p-2 rounded-sm shadow-sm"
+				class="mt-auto bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 dark:focus-visible:outline-cyan-600 p-2 rounded-sm shadow-sm"
 				id="album"
 				type="text"
 				bind:value={album}
 				placeholder="Album"
 			/>
+
+			<div class="mb-auto">
+				<SwitchBox bind:checked={clearAlbum} id={'clearAlbum'} label={'Clear album after upload'} />
+			</div>
+
 			<Button on:click={uploadImage}>Upload</Button>
 		</div>
 	</div>
