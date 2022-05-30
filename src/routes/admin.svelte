@@ -96,14 +96,17 @@
 		{/if}
 
 		<div class="row-start-2 flex flex-col items-center gap-3">
-			<img
-				id="imagePreview"
-				class="rounded-md shadow-sm"
-				width="300"
-				height="300"
-				src={imagePreview ? imagePreview : '/placeholder.png'}
-				alt="Preview"
-			/>
+            <div class="h-[300px] flex items-center">
+                <img
+                    id="imagePreview"
+                    class="rounded-md shadow-sm max-h-[300px]"
+                    width="300"
+                    height="300"
+                    src={imagePreview ? imagePreview : '/placeholder.png'}
+                    alt="Preview"
+                />
+
+            </div>
 			<input
 				class="hidden"
 				id="file-to-upload"
