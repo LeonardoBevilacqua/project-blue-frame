@@ -1,8 +1,12 @@
 <!-- Source https://www.w3schools.com/howto/howto_js_slideshow.asp -->
 <script lang="ts">
+import { page } from '$app/stores';
+
 	import ImageContainer from '$lib/ImageContainer.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
+    console.log()
+    let transitionTime = Number($page.url.searchParams.get("transitionTime")) ?? 5000
 	let images: { id: number; src: string; title: string; active: boolean }[] = [];
 
 	async function getImage() {
@@ -31,7 +35,7 @@
 			slideIndex = 1;
 		}
 		images[slideIndex - 1].active = true;
-		timeout = setTimeout(showSlides, 2000); // Change image every 2 seconds
+		timeout = setTimeout(showSlides, transitionTime);
 	}
 
 	onMount(() => getImage());
@@ -40,6 +44,7 @@
 </script>
 
 <!-- Slideshow container -->
+{transitionTime}
 <div>
 	<div>
 		<!-- Full-width images -->
