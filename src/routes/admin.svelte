@@ -3,6 +3,7 @@
 	import LoadScreen from '$lib/global/LoadScreen.svelte';
 	import NotificationToast from '$lib/global/NotificationToast.svelte';
 	import SwitchBox from '$lib/global/SwitchBox.svelte';
+	import { post, readFile, type FileResult } from '$lib/utils/utils';
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
@@ -53,20 +54,6 @@
 		}
 	}
 
-    /**
-     * Method responsible to read file
-     * @param file file to be read
-     */
-	function readFile(file: File): Promise<any> {
-		return new Promise((resolve) => {
-			const reader = new FileReader();
-
-			reader.onload = () => resolve([reader.result, file.name]);
-
-			reader.readAsDataURL(file);
-		});
-	}
-
 	/**
 	 * Method responsible to upload the image to server
 	 */
@@ -76,27 +63,17 @@
 		}
 
 		loading = true;
-		let readers: Promise<any>[] = [];
+		let readers: Promise<FileResult>[] = [];
+
 		Array.from(files).forEach((file) => {
 			readers.push(readFile(file));
 		});
+
 		Promise.all(readers)
 			.then((images) => {
-				images.forEach((image) => {
-					const imgData = image[0].split(',');
-					const data = { image: '', name: '' };
-
-					data.image = imgData[1];
-					data.name = image[1];
-					fetch(`${album}/upload`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-							Accept: 'application/json'
-						},
-						body: JSON.stringify(data)
-					});
-				});
+				images.forEach((image) =>
+					post(`${album}/upload`, { image: image.result.split(',')[1], name: image.name })
+				);
 			})
 			.finally(() => {
 				notificationToast.displayNotification('Images uploaded with success');
@@ -129,7 +106,7 @@
 
 		<div class="row-start-2 flex flex-col items-center gap-3">
 			<span class="text-gray-800 dark:text-gray-200"
-				>{files?.length ? `${files.length} images selected` : 'Select your images'}</span
+				>{imagePreview ? `${files.length} images selected` : 'Select your images'}</span
 			>
 			<div class="h-[300px] flex items-center">
 				<img
