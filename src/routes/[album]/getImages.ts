@@ -6,7 +6,7 @@ export async function get({ params }: RequestEvent) {
     const images: { id: number; src: string; title: string; active: boolean }[] = []
 
 	if (!existsSync(`static/${album}`)) {
-		return { body: { success: false } };
+		return { status: 404, body: { success: false } };
 	}
 
     readdirSync(`static/${album}`).forEach((file, index) => {
