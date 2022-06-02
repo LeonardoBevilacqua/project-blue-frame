@@ -36,3 +36,28 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+## Building container
+
+To create a new container:
+```bash
+docker build . --no-cache -t sveltekit-docker:latest
+```
+
+To create the volume:
+```bash
+docker volume create blueframe
+```
+
+
+To start the container:
+
+```bash
+# run container as command (stop with Ctrl-C*)
+docker run -it --rm  --init --name sveltekit-docker -p 3000:3000 -v blueframe:/app/static sveltekit-docker:latest
+```
+
+```bash
+# demonize container (send to background)
+docker run -d --name sveltekit-docker -p 3000:3000 -v blueframe:/app/static sveltekit-docker:latest
+```

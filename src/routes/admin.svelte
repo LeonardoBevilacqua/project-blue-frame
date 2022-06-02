@@ -129,6 +129,7 @@
     </div>
 
     <div class="row-start-2 flex flex-col justify-center h-full gap-3">
+		<span class="text-gray-800 dark:text-gray-200">Remember to reload the application after the upload.</span>
         <input
             class="mt-auto bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 dark:focus-visible:outline-cyan-600 p-2 rounded-sm shadow-sm"
             id="album"
