@@ -38,6 +38,8 @@
 				<a class="block text-gray-800 dark:text-gray-200 text-lg" href={`${album}/display`}
 					>{album}</a
 				>
+			{:else}
+				<span class="block text-gray-800 dark:text-gray-200 text-lg">No album available</span>
 			{/each}
 		</div>
 	</div>
