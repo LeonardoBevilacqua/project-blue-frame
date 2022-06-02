@@ -5,8 +5,10 @@
 	import ImageContainer from '$lib/ImageContainer.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
+    const searchParams = $page.url.searchParams
+
 	let error = false;
-	let transitionTime = Number($page.url.searchParams.get('transitionTime')) ?? 5000;
+	let transitionTime = searchParams.has('transitionTime') ? Number(searchParams.get('transitionTime')) : 5000;
 	let images: { id: number; src: string; title: string; active: boolean }[] = [];
 	let slideIndex = 0;
 	let timeout: NodeJS.Timeout;
