@@ -1,34 +1,63 @@
-# Project Blue Frame
-### An web browser picture and video frame using JS and Docker
+# create-svelte
 
-## About
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-* Should be access from any smart device;
-* Should use a web framework (like node.js or react) and Docker for easy distribution;
-* Should allow the user to create albuns (folders) to be displayed;
-* Should allow the user to access an admin page to configure each connected display;
-* Should allow remove upload;
-* [OPT] Should have spotify integration.
+## Creating a project
 
-## Version notes
+If you're seeing this, you've probably already done this step. Congrats!
 
-* v1.0:
-  * Implemented:
-    * [x] Should be access from any smart device;
-    * [x] Should use a web framework (like node.js or react) and Docker for easy distribution;
-    * [x] Should allow the user to create albuns (folders) to be displayed.
-  * Issues:
-    * There is no arm64 version of mongo in docker;
-    * React is failing in raspberry pi 3b+;
-* v2.0:
-  * [x] Changed frontend framework from react to svelte;
-  * [x] Changed database from mongoDb to postgres due to issues with Raspberry Pi.
-  * [x] Updated docker files and compose.
-* v2.1:
-  * [ ] Update admin page with UiKit.
-  * [ ] Display upload progress.
-  * [ ] List saved images.
-  * [ ] Allow delete images.
-  * [ ] Allow to select album.
-  * [ ] Add error handling to server.
-  * [ ] Add variable for postgres user, postgres password and server url;
+```bash
+# create a new project in the current directory
+npm init svelte
+
+# create a new project in my-app
+npm init svelte my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+## Building container
+
+To create a new container:
+```bash
+docker build . --no-cache -t sveltekit-docker:latest
+```
+
+To create the volume:
+```bash
+docker volume create blueframe
+```
+
+
+To start the container:
+
+```bash
+# run container as command (stop with Ctrl-C*)
+docker run -it --rm  --init --name sveltekit-docker -p 3000:3000 -v blueframe:/app/static sveltekit-docker:latest
+```
+
+```bash
+# demonize container (send to background)
+docker run -d --name sveltekit-docker -p 3000:3000 -v blueframe:/app/static sveltekit-docker:latest
+```
