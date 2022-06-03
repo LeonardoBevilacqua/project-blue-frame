@@ -1,14 +1,17 @@
 <!-- Source https://www.w3schools.com/howto/howto_js_slideshow.asp -->
 <script lang="ts">
 	import { page } from '$app/stores';
+	import LoadScreen from '$lib/global/LoadScreen.svelte';
 
 	import ImageContainer from '$lib/ImageContainer.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
-    const searchParams = $page.url.searchParams
+	const searchParams = $page.url.searchParams;
 
 	let error = false;
-	let transitionTime = searchParams.has('transitionTime') ? Number(searchParams.get('transitionTime')) : 5000;
+	let transitionTime = searchParams.has('transitionTime')
+		? Number(searchParams.get('transitionTime'))
+		: 5000;
 	let images: { id: number; src: string; title: string; active: boolean }[] = [];
 	let slideIndex = 0;
 	let timeout: NodeJS.Timeout;
@@ -26,10 +29,10 @@
 				images = data['content'];
 
 				showSlides();
-                return;
+				return;
 			}
 
-            error = true;
+			error = true;
 		});
 	}
 
@@ -63,10 +66,15 @@
 			</div>
 		</div>
 	</div>
+{:else if error}
+	<div class="bg-gray-200 dark:bg-gray-600 h-screen w-screen flex justify-center items-center">
+		<h1 class="text-7xl font-bold text-gray-800 dark:text-gray-200 mb-3">
+			Images not avaliable, please, return to <a
+				class="underline hover:text-gray-900 hover:dark:text-gray-100"
+				href="/">Home</a
+			> screen!
+		</h1>
+	</div>
 {:else}
-    {#if error}
-        <h1>Error, return to <a href="/">Home</a></h1>
-        {:else}
-        <h1>Loading</h1>
-    {/if}
+	<LoadScreen />
 {/if}
