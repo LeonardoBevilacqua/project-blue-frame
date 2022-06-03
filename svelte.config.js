@@ -8,14 +8,7 @@ const config = {
 	// for more information about preprocessors
 	preprocess: preprocess({ out: 'build' }),
 
-	kit: {
-		adapter: adapter(),
-
-		// Override http methods in the Todo forms
-		methodOverride: {
-			allowed: ['PATCH', 'DELETE']
-		}
-	}
+	kit: { adapter: adapter() }
 };
 
 export default config;

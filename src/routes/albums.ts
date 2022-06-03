@@ -1,7 +1,11 @@
-import { readdirSync } from 'fs';
+import { readdirSync, existsSync, mkdirSync } from 'fs';
 
 export async function get() {
-	const albums = readdirSync('static', { withFileTypes: true })
+	if (!existsSync('static/images/')) {
+		mkdirSync('static/images/');
+	}
+
+	const albums = readdirSync('static/images', { withFileTypes: true })
 		.filter((dirent) => dirent.isDirectory())
 		.map((dirent) => dirent.name);
 
